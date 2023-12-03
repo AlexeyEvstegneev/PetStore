@@ -1,0 +1,7 @@
+.footer__container {
+	width: 1440px;
+	height: 194px;
+	padding: 40px, 224px, 40px, 224px;
+	/* justify: space-between; */
+	background: rgba(255, 228, 77, 1);
+}
