@@ -7,7 +7,7 @@ const webpack = require('webpack');
 const production = process.env.NODE_ENV === 'production';
 
 module.exports = {
-	entry: path.resolve(__dirname, '..', './src/index.tsx'), //точка входа в наше приложение содержит абсолютный путь к index.ts
+	entry: path.resolve(__dirname, '..', './src/index.tsx'), //точка входа в наше приложение содержит абсолютный путь к index.tsx
 	output: {
 		path: path.resolve(__dirname, '..', './dist'), //путь куда будет собираться наш проект
 		filename: production
@@ -69,6 +69,9 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'], //указываем файлы с которыми будет работать webpack
+		alias: {
+			'@components': path.resolve(__dirname, '/src/components'),
+		},
 	},
 	plugins: [
 		new HTMLWebpackPlugins({
