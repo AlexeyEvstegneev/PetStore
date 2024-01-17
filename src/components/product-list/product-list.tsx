@@ -1,41 +1,48 @@
-import React, { ChangeEvent } from 'react';
-import usePagination from '../hook/usePagination';
-import { IProduct } from '../interface';
-import {  Grid } from '@mui/material';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { Grid, Pagination } from '@mui/material';
 import ProductCard from '../product-card';
 import PaginationUse from '../pagination/pagination';
+import {
+	ProductsContext,
+	ProductsContextInterface,
+} from '../context/productContext';
 
-interface IProductListProps {
-	products: IProduct[];
-}
-
-const ProductList: React.FC<IProductListProps> = ({ products }) => {
-	const PER_PAGE = 12;
-	const { currentPage, getCurrentData, setPagePaginate, countPage } =
-		usePagination<IProduct>(products, PER_PAGE);
-	function handlePageChange(e: ChangeEvent<unknown>, page: number) {
-		setPagePaginate(page);
+const ProductList: React.FC = () => {
+	const products = useContext(ProductsContext) as ProductsContextInterface;
+	const { product, page, setPage, totalPage } = products;
+	if (!products || !products.product) {
+		return null;
 	}
+	
 	return (
 		<>
 			<Grid container spacing={2}>
-				{getCurrentData().map((product) => (
-					<Grid
-						key={product.id}
-						item
-						sx={{ display: 'flex' }}
-						xs={12}
-						sm={6}
-						md={4}
-						lg={3}>
-						<ProductCard {...product} />
-					</Grid>
-				))}
+				{product &&
+					product.map((prod) => (
+						<Grid
+							key={prod._id}
+							item
+							sx={{ display: 'flex' }}
+							xs={12}
+							sm={6}
+							md={4}
+							lg={3}>
+							<ProductCard
+								pictures={prod.pictures}
+								discount={prod.discount}
+								price={prod.price}
+								name={prod.name}
+								wight={prod.wight}
+								id={prod._id}
+							/>
+						</Grid>
+					))}
 			</Grid>
-			<PaginationUse
-				countPage={countPage}
-				currentPage={currentPage}
-				handlePageChange={handlePageChange}
+			<Pagination
+				count={totalPage}
+				size='small'
+				page={page}
+				onChange={(e, page) => setPage(page)}
 			/>
 		</>
 	);

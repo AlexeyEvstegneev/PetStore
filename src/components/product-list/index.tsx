@@ -1,2 +1,2 @@
-import ProductList from "./product-list";
+import ProductList from './product-list';
 export default ProductList;
